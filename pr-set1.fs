@@ -1,11 +1,10 @@
 ﻿open System
-
+// 'introductory problems' guessing a number
 // pattern matching generated errors..?
 // match x with i -- i is "not defined"
 // i > num -- "undexpected symbol" >
 // num is number to guess
 // unlimited tries - until recursive calls flood the stack
-
 let guess num = 
     let rec ask n = 
         let input = Console.ReadLine()
@@ -19,14 +18,14 @@ let guess num =
             ask n  
     ask
 
+// ================= problem set 1 =====================
 // 17
 // reverse all sublists in a list of lists
 // expected to write more stuff in the List.rev... 
 // apparently just that is enough to pass the reverse function ..?
-
 let rlists l =
     l |> List.map (List.rev)
-// and it works
+
 
 
 // 18
@@ -44,7 +43,7 @@ let rec inter (xs, ys) =
     | (_, _) -> (xs.Head :: [ys.Head]) @ inter(xs.Tail, ys.Tail) 
     // so here could match with anything
     // cause f# already knows it's a list from before
-// and it works
+
 
 // 19
 // cut in half
@@ -54,7 +53,7 @@ let cut lst =
     match lst with
     | [] -> ([], [])
     | _ -> (lst.[0..lst.Length/2-1], lst.[(lst.Length/2)..(lst.Length-1)])
-// and it works
+
 
 // 20
 // shuffle
@@ -70,7 +69,7 @@ let shuffle xs:int list =
             if y >= x.Length then [] //can't check out-of-bounds w/o an "if"
             else (x.[n - x.Length/2] :: x.[n] :: sf(x, n+1))
     sf (xs, (xs.Length/2))
-// and it works
+
 
 // 21 - no idea how to do it, I give up
 
@@ -89,24 +88,6 @@ let rec cart1 = function
     | [], _ -> []
     | _, [] -> []
     | xs, y::ys -> List.map(fun e -> (e, y)) xs @ cart1 (xs, ys)
-// works
-
-
-// 23
-// power set - not my solution
-let rec pset = function
-    | [] -> [[]]
-    | (x::xs) ->
-        let ys = pset xs
-        List.map (fun xs' -> x::xs') ys @ ys
-
-// 24
-// transpose matrix - not my solution
-let rec transp = function
-    | (_::_)::_ as m ->
-        List.map List.head m::transp(List.map (List.tail) m)
-    | _ -> []
-
 
 
 
