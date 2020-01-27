@@ -1,0 +1,97 @@
+====== INTRO PROBLEMS ======
+
+	[1/16]
+1) add1toN - user enters a number n, program adds all numbers from 1 to n, all straight-forward
+2) palindrome - got several 'out of bounds' with string indexes
+	[1/18]
+3) guess a number - would need an accumulator variable to check for number of tries
+	but that generated errors; same with a list to store previous guesses
+	nothing is added until recursion reaches 'base case' which is correct guess
+
+====== PROBLEM SET 1 ======
+
+	[1/22]
+17)
+reverse all sublists in a list of lists
+expected to write more stuff in the List.rev... 
+apparently just that is enough to pass the reverse function ..?
+
+18)
+compiler says 'incomplete pattern matches' with "function"
+as in "some patterns are not covered". 
+somehow this [_] doesn't cover a list of any size w. any elements
+but this _ does, given it was matched to another list before..?
+'fucntion' didn't work but 'match with' did...
+
+	[1/24]
+19)
+cut in half - i don't understand the point of an additional "general" function
+this seems to cut fine, without the n parameter too, for any 'a type
+
+	[1/25]
+20)
+shuffle is just "interleave" 2.0
+for some reason doesn't determine type unless "match" or "function" used
+just calling a list's function on x not enough to tell f#
+that x is a list?
+
+21) no
+
+22)
+cartesian product of two sets
+tested with
+let la = [1; 2; 3]   let lb = ["n"; "i"; "c"; "o"];;
+got this--   val it : (int * string) list = [(1, "n"); (2, "n"); (3, "n"); (1, "i"); (2, "i");  
+             (3, "i"); (1, "c"); (2, "c"); (3, "c"); (1, "o"); (2, "o"); (3, "o")]
+every recursive call, map each elem in xs to the head of remaining ys, until ys becomes []
+type says it isn't curried... but could it be "implicitly curried"..?
+does 'e' in 'fun' refer to each element in xs that's mapped to 'fun'? it acts like that's the case
+
+24)
+
+23)
+
+
+	[1/26]
+25)
+
+26) running the code generated error:
+	error FS0030: Value restriction. The value 'it' has been inferred to have generic type
+	val it : '_a list when '_a : comparison
+    supposedly would be fixed by using "tail-recursive" version of the sort...?
+    this is not my solution
+
+27)
+	E -> E+T | E-T | T
+	T -> T*R | T/R | R
+	R -> F^R | F		// right-associative exponent operation
+	F -> i | (E)		// right-recursive and right-associative sound like they're the same thing
+
+28)
+	this string: 	"if i then if i then print i else print i"
+	generates 2 different parse trees
+	this solution is based on the "dangling else problem" that I've seen in prog2; 
+	is there no way to prove ambiguity other than by example?
+
+ 1:	S
+	|
+	if E then S else S
+	  /	  |	  \
+	 i	  |	   \
+	   if E then S	   print E
+	     /	     |		  \
+	    i	   print E	   i
+			 |
+			 i	
+
+ 2:	S
+	|
+	if E then S 
+	  /	  |
+	 i	  |
+	    if E then S else S	   
+	      /	      |	      \
+	     i	   print E     \
+			 |    print E
+			 i	    |
+				    i
