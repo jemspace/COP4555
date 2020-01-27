@@ -45,6 +45,7 @@ got this--   val it : (int * string) list = [(1, "n"); (2, "n"); (3, "n"); (1, "
              (3, "i"); (1, "c"); (2, "c"); (3, "c"); (1, "o"); (2, "o"); (3, "o")]
 every recursive call, map each elem in xs to the head of remaining ys, until ys becomes []
 type says it isn't curried... but could it be "implicitly curried"..?
+rec inside rec didn't work; inital Map 'fun' only mapped to half of ys's elements
 does 'e' in 'fun' refer to each element in xs that's mapped to 'fun'? it acts like that's the case
 
 24)
