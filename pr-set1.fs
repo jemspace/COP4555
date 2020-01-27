@@ -1,10 +1,11 @@
-﻿open System
-// 'introductory problems' guessing a number
+open System
+// ===================== INTRO PROBLEMS ======================
 // pattern matching generated errors..?
 // match x with i -- i is "not defined"
 // i > num -- "undexpected symbol" >
 // num is number to guess
 // unlimited tries - until recursive calls flood the stack
+
 let guess num = 
     let rec ask n = 
         let input = Console.ReadLine()
@@ -18,7 +19,7 @@ let guess num =
             ask n  
     ask
 
-// ================= problem set 1 =====================
+// ===================== PROBLEM SET 1 ======================
 // 17
 // reverse all sublists in a list of lists
 // expected to write more stuff in the List.rev... 
@@ -27,9 +28,8 @@ let rlists l =
     l |> List.map (List.rev)
 
 
-
 // 18
-// interleave lists - yay
+// interleave lists
 // compiler says 'incomplete pattern matches' 
 // as in "some patterns are not covered". 
 // somehow this [_] doesn't cover a list of any size w. any elements
@@ -44,7 +44,6 @@ let rec inter (xs, ys) =
     // so here could match with anything
     // cause f# already knows it's a list from before
 
-
 // 19
 // cut in half
 // i don't understand the point of an additional "general" function
@@ -53,7 +52,6 @@ let cut lst =
     match lst with
     | [] -> ([], [])
     | _ -> (lst.[0..lst.Length/2-1], lst.[(lst.Length/2)..(lst.Length-1)])
-
 
 // 20
 // shuffle
@@ -71,8 +69,6 @@ let shuffle xs:int list =
     sf (xs, (xs.Length/2))
 
 
-// 21 - no idea how to do it, I give up
-
 // 22
 // cartesian product of two sets
 // tested with
@@ -89,6 +85,63 @@ let rec cart1 = function
     | _, [] -> []
     | xs, y::ys -> List.map(fun e -> (e, y)) xs @ cart1 (xs, ys)
 
+
+// 23
+// for each element, a subset of powerset either includes it or not
+// for list of n elements yields a powerset of 2^n
+// each recursive call is either with an element or without
+// (full list or just tail)
+// --- version 1
+let rec powerset = function
+    | [] -> [[]]
+    | (x::xs) -> List.map(fun xs -> x::xs) xs @ (powerset xs) // errors (-_-")
+
+// --- version 2
+// not a full power set
+let rec powerset = function
+    | [] -> [[]]
+    | (x::xs) -> 
+        let xs2 = powerset xs
+        List.map(fun xs -> x::xs) [xs] @ xs2
+
+
+// 24
+
+
+// 25
+// has all 3 rules for recursion
+let rec sort = function
+    | [] -> [] //base case covered
+    | [x] -> [x] //base case covered
+    | x1::x2::xs ->
+        if x1 <= x2 then (x1 :: sort (x2::xs)) //sorting progressively smaller sublists (xs)
+        else (x2 :: sort (x1::xs))
+
+// 26
+// supposedly the last thing should be a recursive call,
+// but in one of these it isn't the last
+let rec merge = function
+    | ([], ys) -> ys
+    | (xs, []) -> xs
+    | (x::xs, y::ys) -> 
+        if x<y then x::merge(xs,y::ys)
+        else y::merge(x::xs, ys)
+
+// the split works not by splitting the list in half
+// but by putting every other element in one list, every next in the other?
+let rec split = function
+    | [] -> ([], []) 
+    | [a] -> ([a], [])
+    | a::b::cs -> 
+        let (M, N) = split cs
+        (a::M, b::N) //not recursive call? a "let" value binding
+
+let rec mergesort = function
+| [] -> []
+| L ->
+    let (M, N) = split L
+    merge (mergesort M, mergesort N) //last thing is recursive call as should be
+    
 
 
 [<EntryPoint>]
