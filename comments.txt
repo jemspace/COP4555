@@ -35,8 +35,6 @@ for some reason doesn't determine type unless "match" or "function" used
 just calling a list's function on x not enough to tell f#
 that x is a list?
 
-21) no
-
 22)
 cartesian product of two sets
 tested with
@@ -48,13 +46,21 @@ type says it isn't curried... but could it be "implicitly curried"..?
 rec inside rec didn't work; inital Map 'fun' only mapped to half of ys's elements
 does 'e' in 'fun' refer to each element in xs that's mapped to 'fun'? it acts like that's the case
 
-24)
-
+	[1/27]		-dates are not in order
 23)
+for each element, a subset of powerset either includes it or not
+for list of n elements yields a powerset of 2^n
+each recursive call is either with an element or without
+(full list or just tail)
 
 
 	[1/26]
 25)
+has all 3 rules for recursion
+let rec sort = function
+    | [] -> [] //base case covered
+    | [x] -> [x] //base case covered
+    | x1::x2::xs -> if x1 <= x2 then (x1 :: sort (x2::xs))else (x2 :: sort (x1::xs)) //sorting progressively smaller sublists (xs)
 
 26) running the code generated error:
 	error FS0030: Value restriction. The value 'it' has been inferred to have generic type
